@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <!-- HTML2Canvas for Exporting Image -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
     
@@ -220,7 +221,7 @@
   </div>
 
   <script>
-    /* Default Tree Data initialized from the uploaded handwritten diagram */
+    /* Default Tree Data initialized from the requested image */
     const INITIAL_JAMGADE_TREE = {
       nodes: [
         // Gen 0: Great Grandfather
@@ -238,7 +239,7 @@
         // Gen 1: Grandparents & Siblings
         {
           id: 'node_2',
-          name: 'Knath Jamgade',
+          name: 'Eknath Jamgade',
           role: 'Grandfather',
           gender: 'male',
           spouseId: 'node_3',
@@ -255,10 +256,10 @@
           generation: 1
         },
         {
-          id: 'node_empty_gen1',
-          name: 'Unnamed Relative',
-          role: 'Granduncle/Aunt',
-          gender: 'other',
+          id: 'node_vasant',
+          name: 'Vasant Jamgade',
+          role: 'Granduncle',
+          gender: 'male',
           spouseId: null,
           parentIds: ['node_1'],
           generation: 1
@@ -283,10 +284,10 @@
           generation: 2
         },
         {
-          id: 'node_empty_gen2',
-          name: 'Relative',
-          role: 'Uncle/Aunt',
-          gender: 'other',
+          id: 'node_shobha',
+          name: 'Shobha Jamgade',
+          role: 'Aunt',
+          gender: 'female',
           spouseId: null,
           parentIds: ['node_2', 'node_3'],
           generation: 2
@@ -314,6 +315,7 @@
     };
 
     // Application State
+    // Updated key to v3 to ensure it ignores previous cache and loads the new image-based data
     let treeData = loadTreeState();
     let zoomLevel = 1;
     let panX = 0;
@@ -331,7 +333,7 @@
     const modalContainer = modal.querySelector('.modal-container');
 
     function loadTreeState() {
-      const saved = localStorage.getItem('jamgade_family_tree_v2');
+      const saved = localStorage.getItem('jamgade_family_tree_v3');
       if (saved) {
         try {
           return JSON.parse(saved);
@@ -343,7 +345,7 @@
     }
 
     function saveTreeState() {
-      localStorage.setItem('jamgade_family_tree_v2', JSON.stringify(treeData));
+      localStorage.setItem('jamgade_family_tree_v3', JSON.stringify(treeData));
       renderTree();
     }
 
